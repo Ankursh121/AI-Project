@@ -3,66 +3,6 @@
   "outputDirectory": "frontend/dist",
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/health",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/building",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/scenarios",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/route",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/compare-algorithms",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/simulate",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/simulation/(.*)",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/hazards",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/reset",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/report",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/docs",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/openapi.json",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
-    },
-    {
-      "source": "/logoo.jpg",
-      "destination": "/logoo.jpg"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
