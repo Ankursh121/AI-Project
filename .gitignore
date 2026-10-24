@@ -10,7 +10,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -44,10 +43,9 @@ htmlcov/
 # Environment variables
 .env
 
-# Node / Frontend dependencies & build artifacts
+# Node / Frontend dependencies
 node_modules/
 frontend/node_modules/
-frontend/dist/
 .vite/
 npm-debug.log*
 yarn-debug.log*

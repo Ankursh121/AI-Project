@@ -57,14 +57,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from pathlib import Path
+from fastapi import Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+# Locate frontend production build bundle
+DIST_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+ASSETS_DIR = DIST_DIR / "assets"
+
 # Register API routes (both root and /api prefixed for client compatibility)
 app.include_router(api_router)
 app.include_router(api_router, prefix="/api")
 
+# Mount /assets if built frontend directory exists
+if ASSETS_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=str(ASSETS_DIR)), name="assets")
 
-@app.get("/", tags=["System"])
-def root() -> Dict[str, Any]:
-    """Root endpoint providing service metadata, documentation links, and academic disclaimer."""
+
+def api_metadata() -> Dict[str, Any]:
+    """Returns service metadata, documentation links, and academic disclaimer."""
     return {
         "service": "Emergency Evacuation Planning & Intelligent Route Optimization System",
         "version": "1.0.0",
@@ -89,6 +101,52 @@ def root() -> Dict[str, Any]:
             "must follow official building safety plans and civil defense directives."
         ),
     }
+
+
+@app.get("/logoo.jpg", include_in_schema=False)
+def serve_logo():
+    logo_file = DIST_DIR / "logoo.jpg"
+    if logo_file.exists():
+        return FileResponse(str(logo_file), media_type="image/jpeg")
+    return {"error": "Logo not found"}
+
+
+@app.get("/api-info", tags=["System"])
+def api_info() -> Dict[str, Any]:
+    """Provides service metadata and available emergency evacuation endpoints."""
+    return api_metadata()
+
+
+@app.get("/", tags=["System"])
+def root(request: Request):
+    """
+    Root endpoint: serves the 3D Digital Twin frontend to web browsers,
+    or returns API metadata to test and programmatic clients.
+    """
+    accept = request.headers.get("accept", "")
+    index_file = DIST_DIR / "index.html"
+    if "text/html" in accept and index_file.exists():
+        return FileResponse(str(index_file))
+    return api_metadata()
+
+
+@app.get("/index.html", include_in_schema=False)
+def serve_index_direct():
+    index_file = DIST_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(str(index_file))
+    return api_metadata()
+
+
+@app.get("/{full_path:path}", include_in_schema=False)
+def catch_all_spa(full_path: str):
+    file_path = DIST_DIR / full_path
+    if file_path.exists() and file_path.is_file():
+        return FileResponse(str(file_path))
+    index_file = DIST_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(str(index_file))
+    return {"detail": "Not Found"}
 
 
 if __name__ == "__main__":
