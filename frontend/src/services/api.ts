@@ -11,8 +11,14 @@ import {
 } from '../types';
 import { MOCK_BUILDING, MOCK_SCENARIOS, MOCK_SIMULATION_STATE, MOCK_REPORT } from './mockData';
 
-// Configurable base URL with safe fallback
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+// Configurable base URL with safe fallback for both local development and production deployments
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  (typeof window !== 'undefined' &&
+  window.location.hostname !== 'localhost' &&
+  window.location.hostname !== '127.0.0.1'
+    ? ''
+    : 'http://127.0.0.1:8000');
 
 class ApiService {
   private isOnline = false;
