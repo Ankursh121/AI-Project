@@ -62,9 +62,12 @@ from fastapi import Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-# Locate frontend production build bundle
-DIST_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
-ASSETS_DIR = DIST_DIR / "assets"
+# Locate frontend production build bundle (checks root public directory first, then frontend/dist)
+ROOT_DIR = Path(__file__).resolve().parent.parent
+PUBLIC_DIR = ROOT_DIR / "public"
+DIST_DIR = ROOT_DIR / "frontend" / "dist"
+STATIC_DIR = PUBLIC_DIR if (PUBLIC_DIR / "index.html").exists() else DIST_DIR
+ASSETS_DIR = STATIC_DIR / "assets"
 
 # Register API routes (both root and /api prefixed for client compatibility)
 app.include_router(api_router)
@@ -105,7 +108,7 @@ def api_metadata() -> Dict[str, Any]:
 
 @app.get("/logoo.jpg", include_in_schema=False)
 def serve_logo():
-    logo_file = DIST_DIR / "logoo.jpg"
+    logo_file = STATIC_DIR / "logoo.jpg"
     if logo_file.exists():
         return FileResponse(str(logo_file), media_type="image/jpeg")
     return {"error": "Logo not found"}
@@ -124,7 +127,7 @@ def root(request: Request):
     or returns API metadata to test and programmatic clients.
     """
     accept = request.headers.get("accept", "")
-    index_file = DIST_DIR / "index.html"
+    index_file = STATIC_DIR / "index.html"
     if "text/html" in accept and index_file.exists():
         return FileResponse(str(index_file))
     return api_metadata()
@@ -132,7 +135,7 @@ def root(request: Request):
 
 @app.get("/index.html", include_in_schema=False)
 def serve_index_direct():
-    index_file = DIST_DIR / "index.html"
+    index_file = STATIC_DIR / "index.html"
     if index_file.exists():
         return FileResponse(str(index_file))
     return api_metadata()
@@ -140,10 +143,10 @@ def serve_index_direct():
 
 @app.get("/{full_path:path}", include_in_schema=False)
 def catch_all_spa(full_path: str):
-    file_path = DIST_DIR / full_path
+    file_path = STATIC_DIR / full_path
     if file_path.exists() and file_path.is_file():
         return FileResponse(str(file_path))
-    index_file = DIST_DIR / "index.html"
+    index_file = STATIC_DIR / "index.html"
     if index_file.exists():
         return FileResponse(str(index_file))
     return {"detail": "Not Found"}

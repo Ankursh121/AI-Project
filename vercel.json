@@ -1,8 +1,68 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/logoo.jpg",
+      "destination": "/logoo.jpg"
+    },
+    {
+      "source": "/health",
       "destination": "app/main.py"
+    },
+    {
+      "source": "/building",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/scenarios",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/route",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/compare-algorithms",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/simulate",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/simulation/(.*)",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/hazards",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/reset",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/report",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/docs",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "app/main.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
