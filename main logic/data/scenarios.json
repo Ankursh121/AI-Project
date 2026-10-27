@@ -1,0 +1,176 @@
+[
+  {
+    "id": "scenario_normal",
+    "name": "Normal Campus",
+    "description": "Baseline operational status. All campus pathways, gates, and assembly areas are fully clear and operational.",
+    "initial_hazards": [],
+    "initial_agents": [
+      {
+        "agent_id": "group_vedanta",
+        "name": "Vedanta Computing Students",
+        "current_location": "VEDANTA_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 45,
+        "movement_speed": 1.2,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      },
+      {
+        "agent_id": "group_chanakya",
+        "name": "Chanakya Admin Staff",
+        "current_location": "CHANAKYA_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 20,
+        "movement_speed": 1.1,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      },
+      {
+        "agent_id": "group_sarojini",
+        "name": "Sarojini Hostel Residents",
+        "current_location": "SAROJINI_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 35,
+        "movement_speed": 1.2,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      }
+    ],
+    "expected_outcome": "Evacuees from all three buildings reach the South Main Gate and Central Assembly Grounds with minimal travel time."
+  },
+  {
+    "id": "scenario_fire_vedanta",
+    "name": "Fire Near Vedanta",
+    "description": "A fire hazard breaks out along the Vedanta Academic Walkway with heavy smoke. The primary walkway to Central Plaza is impassable, prompting agents to reroute to the North Emergency Gate.",
+    "initial_hazards": [
+      {
+        "hazard_id": "hazard_fire_vedanta",
+        "hazard_type": "fire",
+        "location_type": "node",
+        "target_id": "PATH_WEST_VEDANTA",
+        "severity": 85.0,
+        "spread_rate": 0.15,
+        "spread_to_neighbors": true,
+        "is_passable": false,
+        "active": true,
+        "description": "Intense electrical fire on Vedanta walkway with dense smoke dispersion."
+      }
+    ],
+    "initial_agents": [
+      {
+        "agent_id": "group_vedanta",
+        "name": "Vedanta Computing Students",
+        "current_location": "VEDANTA_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 45,
+        "movement_speed": 1.2,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      },
+      {
+        "agent_id": "group_chanakya",
+        "name": "Chanakya Admin Staff",
+        "current_location": "CHANAKYA_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 20,
+        "movement_speed": 1.1,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      }
+    ],
+    "expected_outcome": "Vedanta evacuees successfully reroute away from the hazardous walkway toward the North Emergency Gate."
+  },
+  {
+    "id": "scenario_blocked_path",
+    "name": "Blocked Campus Path",
+    "description": "Debris and construction block the Central Campus Plaza, cutting off direct access between buildings and forcing agents onto perimeter bypass walkways.",
+    "initial_hazards": [
+      {
+        "hazard_id": "hazard_block_plaza",
+        "hazard_type": "structural_blockage",
+        "location_type": "node",
+        "target_id": "CENTRAL_PLAZA",
+        "severity": 95.0,
+        "spread_rate": 0.0,
+        "spread_to_neighbors": false,
+        "is_passable": false,
+        "active": true,
+        "description": "Fallen trees and structural barrier blocking the Central Plaza junction."
+      }
+    ],
+    "initial_agents": [
+      {
+        "agent_id": "group_vedanta",
+        "name": "Vedanta Computing Students",
+        "current_location": "VEDANTA_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 45,
+        "movement_speed": 1.2,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      },
+      {
+        "agent_id": "group_sarojini",
+        "name": "Sarojini Hostel Residents",
+        "current_location": "SAROJINI_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 35,
+        "movement_speed": 1.2,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      }
+    ],
+    "expected_outcome": "Agents successfully navigate around the blocked central hub using the West Perimeter Bypass and East Athletic paths."
+  },
+  {
+    "id": "scenario_exit_unavailable",
+    "name": "Exit Unavailable",
+    "description": "The South Main Gate is locked or compromised. Evacuees must dynamically re-route to alternative campus exits and designated assembly grounds.",
+    "initial_hazards": [
+      {
+        "hazard_id": "hazard_gate_closed",
+        "hazard_type": "structural_blockage",
+        "location_type": "node",
+        "target_id": "EXIT_MAIN_GATE",
+        "severity": 100.0,
+        "spread_rate": 0.0,
+        "spread_to_neighbors": false,
+        "is_passable": false,
+        "active": true,
+        "description": "Main University South Gate compromised and impassable."
+      }
+    ],
+    "initial_agents": [
+      {
+        "agent_id": "group_chanakya",
+        "name": "Chanakya Admin Staff",
+        "current_location": "CHANAKYA_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 25,
+        "movement_speed": 1.1,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      },
+      {
+        "agent_id": "group_sarojini",
+        "name": "Sarojini Hostel Residents",
+        "current_location": "SAROJINI_ENTRANCE",
+        "destination_exit": null,
+        "group_size": 35,
+        "movement_speed": 1.2,
+        "requires_accessible_route": false,
+        "mobility_profile": "standard",
+        "status": "idle"
+      }
+    ],
+    "expected_outcome": "Evacuees intelligently redirect to the Central Assembly Grounds and East Perimeter Exit Gate."
+  }
+]
